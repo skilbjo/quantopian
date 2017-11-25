@@ -3,7 +3,15 @@ set -eoux pipefail
 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 app_name=$(basename $(dirname $dir))
-
+src_dir="${dir}"
+out_dir="${dir}/../out"
 cd "${dir}/.."
 
-python src/main.py
+#python src/main.py
+
+python_file="dual_moving_average.py"
+
+zipline run -f "${src_dir}/${python_file}" \
+  --start 2011-01-01 \
+  --end   2012-01-01 \
+  -o "${out_dir}/dma.pickle"
